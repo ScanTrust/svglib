@@ -22,3 +22,7 @@ tests/samples/wikipedia/flags
 tests/samples/wikipedia/symbols
 tests/samples/W3C_SVG_12_TinyTestSuite.tar.gz
 tests/samples/W3C_SVG_12_TinyTestSuite/
+
+.idea/
+.vscode/
+.qodo/

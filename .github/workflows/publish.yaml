@@ -1,0 +1,31 @@
+name: Publish To Devpi
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade setuptools wheel pip
+          pip install -r requirements.txt
+          pip install devpi-client
+
+      - name: Configure Devpi
+        env:
+          DEVPI_USERNAME: ${{ secrets.DEVPI_RW_USERNAME }}
+          DEVPI_PASSWORD: ${{ secrets.DEVPI_RW_PASSWORD }}
+        run: |
+          devpi use https://devpi.scantrust.io/st/pypi/
+          devpi login ${DEVPI_USERNAME} --password=${DEVPI_PASSWORD}
+
+      - name: Upload
+        run: |
+          devpi upload
